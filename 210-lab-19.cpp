@@ -32,7 +32,8 @@ public:
 
     Movie(string t, string c, vector<float> movieRankings) {
         title = t;
-        comments = c; 
+        comments = c;
+        head = nullptr;  
         for(int i = 0; i < movieRankings.size(); i++) {
             addReviewToHead(movieRankings.at(i));
         }
@@ -88,9 +89,14 @@ int main() {
             getline(inputFile, comments); 
             vector<float> allRatings; 
             for(int i = 0; i < NUM_RATINGS; i++) {
-                allRatings.push_back((rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0);
+                float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0;
+                allRatings.push_back(rating); 
+                cout << rating << ", ";
             }
-            movies.push_back(Movie(title, comments, allRatings));
+            cout << endl;
+            movies.emplace_back(title, comments, allRatings);
+            cout << movies.back().getTitle() << " " << movies.back().getComments() << endl;;
+            cout << "size: " << movies.size() << endl; 
         }
         inputFile.close();
     }
