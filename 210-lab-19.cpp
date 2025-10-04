@@ -67,22 +67,24 @@ public:
         Node* current = head;
         int reviewNum = 0; 
         float totalRatingScore = 0.0; 
+        cout << "Movie title: " << title << endl;
+        cout << "Comments: " << comments << endl; 
         while (current) {
-            cout << "    > Review #" << reviewNum++ << ": " << current->rating << endl; 
+            cout << "    > Review #" << ++reviewNum << ": " << current->rating << endl; 
             totalRatingScore += current->rating; 
             current = current->next;
         }
-        cout << "    > Average: " << totalRatingScore/reviewNum;
         cout << endl;
     }
 };
 
 int main() {
     srand(time(0));
-    vector<Movie> movies;
+    vector<Movie> movies(4);
     ifstream inputFile("input.txt");
     string title; 
     string comments;
+    int movieCount = 0;
     if(inputFile.is_open()) { 
        // cout << "reading";
         while (getline(inputFile, title)) {
@@ -90,13 +92,10 @@ int main() {
             vector<float> allRatings; 
             for(int i = 0; i < NUM_RATINGS; i++) {
                 float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0;
-                allRatings.push_back(rating); 
-                cout << rating << ", ";
+                allRatings.push_back(rating);
             }
-            cout << endl;
-            movies.emplace_back(title, comments, allRatings);
-            cout << movies.back().getTitle() << " " << movies.back().getComments() << endl;;
-            cout << "size: " << movies.size() << endl; 
+            movies.at(movieCount) = Movie(title, comments, allRatings);
+            movieCount++;
         }
         inputFile.close();
     }
@@ -104,9 +103,7 @@ int main() {
         cout << "File not found" << endl; 
     }
 
-    cout << "done" << movies.size(); 
     for (int i = 0; i < movies.size(); i++) {
-        cout << "I" << endl;
         movies.at(i).printReviews(); 
     }
     return 0; 
