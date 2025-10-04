@@ -3,7 +3,16 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
+#include <fstream>
+#include <cstdlib>
+#include <ctime> 
 using namespace std; 
+
+
+const int NUM_RATINGS = 4; 
+const int MIN_RATING = 1;
+const int MAX_RATING = 5;
 
 class Movie {
 private: 
@@ -60,16 +69,35 @@ public:
 };
 
 int main() {
+    srand(time(0));
     vector<Movie> movies;
+    ifstream inputFile("input.txt");
+    string title; 
+    string comments;
+    if(inputFile.is_open()) { 
+        while (getline(inputFile, title)) {
+            getline(inputFile, comments); 
+            cout << title << " " << comments << endl; 
+           // inputFile.ignore();
+            Movie tempMovie; 
+            tempMovie.setTitle(title);
+            tempMovie.setComments(comments); 
+            for(int i = 0; i < NUM_RATINGS; i++) {
+                float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0;
+                tempMovie.addReviewToHead(rating);
+            }
+            movies.push_back(tempMovie);
+           
+        }
+        inputFile.close();
+    }
+    else { 
+        cout << "File not found" << endl; 
+    }
 
-    Movie movie1; 
-    movie1.setTitle("hell world");
-    movie1.setComments("amazing");
-    movie1.addReviewToHead(2.3);
-    movie1.addReviewToHead(1.3);
-    movie1.addReviewToHead(4.5);
-
-    movie1.printReviews(); 
+    for (int i = 0; i < movies.size(); i++) {
+        movies.at(i).printReviews(); 
+    }
     return 0; 
 }
 
