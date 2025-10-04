@@ -30,6 +30,14 @@ public:
         head = nullptr; 
     }
 
+    Movie(string t, string c, vector<float> movieRankings) {
+        title = t;
+        comments = c; 
+        for(int i = 0; i < movieRankings.size(); i++) {
+            addReviewToHead(movieRankings.at(i));
+        }
+    }
+
     ~Movie() {
         Node* current = head;
         while (current) {
@@ -82,11 +90,11 @@ int main() {
             Movie tempMovie; 
             tempMovie.setTitle(title);
             tempMovie.setComments(comments); 
+            movies.push_back(tempMovie);
             for(int i = 0; i < NUM_RATINGS; i++) {
                 float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0;
-                tempMovie.addReviewToHead(rating);
+                movies.back().addReviewToHead(rating);
             }
-            movies.push_back(tempMovie);
            
         }
         inputFile.close();
