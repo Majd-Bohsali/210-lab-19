@@ -13,6 +13,7 @@ using namespace std;
 const int NUM_RATINGS = 4; 
 const int MIN_RATING = 1;
 const int MAX_RATING = 5;
+const int NUM_MOVIES = 4; 
 
 class Movie {
 private: 
@@ -36,6 +37,19 @@ public:
         head = nullptr;  
         for(int i = 0; i < movieRankings.size(); i++) {
             addReviewToHead(movieRankings.at(i));
+        }
+    }
+
+    Movie(const Movie& other) { // since there is a linked list it needs a deep copy
+        title = other.title; 
+        comments = other.comments;
+        head = nullptr;
+        Node* current = other.head;
+        Node* tail = nullptr; 
+
+        while(current) {
+            Node* next = new Node; 
+            
         }
     }
 
@@ -80,7 +94,7 @@ public:
 
 int main() {
     srand(time(0));
-    vector<Movie> movies(4);
+    vector<Movie> movies(NUM_MOVIES);
     ifstream inputFile("input.txt");
     string title; 
     string comments;
