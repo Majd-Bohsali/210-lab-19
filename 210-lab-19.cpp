@@ -21,6 +21,15 @@ public:
         head = nullptr; 
     }
 
+    ~Movie() {
+        Node* current = head;
+        while (current) {
+            head = current->next; 
+            delete current;
+            current = head;
+        }
+    }
+
     void setTitle(string t) { title = t; }
     void setComments(string c) {comments = c; }
     string getTitle() { return title; } 
