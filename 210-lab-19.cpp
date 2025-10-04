@@ -15,12 +15,16 @@ private:
     Node* head;
     string comments; 
 public:
+    void setTitle(string t) { title = t; }
+    void setComments(string c) {comments = c; }
+    string getTitle() { return title; } 
+    string getComments() { return comments; }
     Node* addToHead(Node* hd, float rating) { 
-    Node* newNode = new Node; 
-    newNode->rating = rating; 
-    newNode->next = hd; 
-    return newNode;
-}
+        Node* newNode = new Node; 
+        newNode->rating = rating; 
+        newNode->next = hd; 
+        return newNode;
+    }
 };
 
 int main() {
