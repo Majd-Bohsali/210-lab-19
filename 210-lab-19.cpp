@@ -83,19 +83,14 @@ int main() {
     string title; 
     string comments;
     if(inputFile.is_open()) { 
+       // cout << "reading";
         while (getline(inputFile, title)) {
             getline(inputFile, comments); 
-            cout << title << " " << comments << endl; 
-           // inputFile.ignore();
-            Movie tempMovie; 
-            tempMovie.setTitle(title);
-            tempMovie.setComments(comments); 
-            movies.push_back(tempMovie);
+            vector<float> allRatings; 
             for(int i = 0; i < NUM_RATINGS; i++) {
-                float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0;
-                movies.back().addReviewToHead(rating);
+                allRatings.push_back((rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0);
             }
-           
+            movies.push_back(Movie(title, comments, allRatings));
         }
         inputFile.close();
     }
@@ -103,7 +98,9 @@ int main() {
         cout << "File not found" << endl; 
     }
 
+    cout << "done" << movies.size(); 
     for (int i = 0; i < movies.size(); i++) {
+        cout << "I" << endl;
         movies.at(i).printReviews(); 
     }
     return 0; 
