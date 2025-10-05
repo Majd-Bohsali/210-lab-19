@@ -48,8 +48,19 @@ public:
         Node* tail = nullptr; 
 
         while(current) {
-            Node* next = new Node; 
-            
+            Node* nextNode = new Node; 
+            nextNode->rating = current->rating; 
+            nextNode->next = nullptr;
+
+            if(!head) {
+                head = nextNode;
+                tail = nextNode;
+            }
+            else {
+                tail->next = nextNode;
+                tail = nextNode; 
+            }
+            current = current->next;
         }
     }
 
@@ -94,21 +105,20 @@ public:
 
 int main() {
     srand(time(0));
-    vector<Movie> movies(NUM_MOVIES);
+    vector<Movie> movies;
     ifstream inputFile("input.txt");
     string title; 
     string comments;
     int movieCount = 0;
     if(inputFile.is_open()) { 
-       // cout << "reading";
         while (getline(inputFile, title)) {
             getline(inputFile, comments); 
             vector<float> allRatings; 
             for(int i = 0; i < NUM_RATINGS; i++) {
-                float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0;
+                float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0 + MIN_RATING;
                 allRatings.push_back(rating);
             }
-            movies.at(movieCount) = Movie(title, comments, allRatings);
+            movies.push_back(Movie(title, comments, allRatings));
             movieCount++;
         }
         inputFile.close();
