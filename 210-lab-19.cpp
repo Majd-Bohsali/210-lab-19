@@ -30,11 +30,11 @@ public:
         head = nullptr; 
     }
 
-    Movie(string t, vector<float> movieRankings) {
+    Movie(string t, vector<string> allComments, vector<float> movieRankings) {
         title = t;
         head = nullptr;  
         for(int i = 0; i < movieRankings.size(); i++) {
-            addReviewToHead(movieRankings.at(i));
+            addReviewToHead(movieRankings.at(i), allComments.at(i));
         }
     }
 
@@ -73,9 +73,10 @@ public:
 
     void setTitle(string t) { title = t; }
     string getTitle() { return title; }
-    void addReviewToHead(float rating) { 
+    void addReviewToHead(float rating, string comments) { 
         Node* newNode = new Node; 
         newNode->rating = rating; 
+        newNode->comments = comments; 
         newNode->next = head;
         head = newNode;
     }
@@ -107,13 +108,15 @@ int main() {
     int movieCount = 0;
     if(inputFile.is_open()) { 
         while (getline(inputFile, title)) {
-            getline(inputFile, comments); 
             vector<float> allRatings; 
+            vector<string> allComments; 
             for(int i = 0; i < NUM_RATINGS; i++) {
                 float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0 + MIN_RATING;
+                getline(inputFile, comments); 
                 allRatings.push_back(rating);
+                allComments.push_back(comments); 
             }
-            movies.push_back(Movie(title, allRatings));
+            movies.push_back(Movie(title, allComments, allRatings));
             movieCount++;
         }
         inputFile.close();
@@ -127,4 +130,3 @@ int main() {
     }
     return 0; 
 }
-
