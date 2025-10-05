@@ -19,21 +19,19 @@ class Movie {
 private: 
     struct Node {
         float rating; 
+        string comments;
         Node *next;
     };
     string title;
     Node* head;
-    string comments; 
 public:
     Movie() {
         title = "";
-        comments = ""; 
         head = nullptr; 
     }
 
-    Movie(string t, string c, vector<float> movieRankings) {
+    Movie(string t, vector<float> movieRankings) {
         title = t;
-        comments = c;
         head = nullptr;  
         for(int i = 0; i < movieRankings.size(); i++) {
             addReviewToHead(movieRankings.at(i));
@@ -41,8 +39,7 @@ public:
     }
 
     Movie(const Movie& other) { // since there is a linked list it needs a deep copy
-        title = other.title; 
-        comments = other.comments;
+        title = other.title;
         head = nullptr;
         Node* current = other.head;
         Node* tail = nullptr; 
@@ -50,6 +47,7 @@ public:
         while(current) {
             Node* nextNode = new Node; 
             nextNode->rating = current->rating; 
+            nextNode->comments = current->comments; 
             nextNode->next = nullptr;
 
             if(!head) {
@@ -74,9 +72,7 @@ public:
     }
 
     void setTitle(string t) { title = t; }
-    void setComments(string c) {comments = c; }
-    string getTitle() { return title; } 
-    string getComments() { return comments; }
+    string getTitle() { return title; }
     void addReviewToHead(float rating) { 
         Node* newNode = new Node; 
         newNode->rating = rating; 
@@ -93,9 +89,8 @@ public:
         int reviewNum = 0; 
         float totalRatingScore = 0.0; 
         cout << "Movie title: " << title << endl;
-        cout << "Comments: " << comments << endl; 
         while (current) {
-            cout << "    > Review #" << ++reviewNum << ": " << current->rating << endl; 
+            cout << "    > Review #" << ++reviewNum << ": " << current->rating << ": " << current->comments << endl; 
             totalRatingScore += current->rating; 
             current = current->next;
         }
@@ -118,7 +113,7 @@ int main() {
                 float rating = (rand() % ((MAX_RATING - MIN_RATING) * 10 + 1)) / 10.0 + MIN_RATING;
                 allRatings.push_back(rating);
             }
-            movies.push_back(Movie(title, comments, allRatings));
+            movies.push_back(Movie(title, allRatings));
             movieCount++;
         }
         inputFile.close();

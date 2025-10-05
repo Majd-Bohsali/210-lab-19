@@ -1,8 +1,20 @@
 Movie1
-Oscar Contender
+Oscar contender
+Top movie
+Can be better
+Best of the Year
 Movie2
 Brilliant lead acting
+Amazing story
+Funny writting
+Loved it!
 Movie3
 Ok acting
+Slow start
+Could be better
+Ok writting
 Movie4
 Bad script and acting
+Bad budget
+Very boring
+Hated it
